@@ -59,7 +59,7 @@ pub mod unix;
 pub use self::unix as native;
 
 #[cfg(windows)]
-mod windows;
+pub mod windows;
 #[cfg(windows)]
 pub use self::windows as native;
 
