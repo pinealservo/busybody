@@ -16,7 +16,7 @@ pub struct ActivityContext {
     pub args: Vec<String>,
 }
 
-pub fn print_activity_info(act : &log::ActivityLog) -> Result<(), serde_json::Error> {
+pub fn print_activity_info(act: &log::ActivityLog) -> Result<(), serde_json::Error> {
     let jstr = serde_json::to_string(act)?;
     println!("{}", jstr);
     Ok(())

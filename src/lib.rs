@@ -43,7 +43,10 @@ mod tests {
             },
             info: ActionLogInfo::File(FileLogInfo{
                 path: ["/", "Users", "joe", "note.txt"].iter().collect(),
-                operation: FileAction::Create,
+                operation: FileAction{
+                    operation: FileOp::Create,
+                    filetype: FileType::File,
+                },
             }),
         };
 
