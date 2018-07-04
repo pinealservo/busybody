@@ -4,35 +4,34 @@ extern crate chrono;
 
 extern crate libbusybody;
 
-use std::path::PathBuf;
-use std::net::{IpAddr, SocketAddr};
-use chrono::prelude::*;
-
 use libbusybody::activity::*;
+use libbusybody::native;
 
 fn main() {
     println!("Hello, world!");
-    let testproc = ProcessLogInfo {
-        name: "test".to_owned(),
-        id: 42,
-        cmdline: "test 1 2 3".to_owned(),
+
+    let mut cmdargs = std::env::args();
+
+    let ctx = ActivityContext{
+        user_name: native::get_username(),
+        pid: std::process::id(),
+        cmd: cmdargs.nth(0).unwrap().to_string(),
+        args: cmdargs.collect(),
     };
 
-    print_process_info(&testproc).unwrap();
+    println!("Context: {:?}", ctx);
 
-    let testact = ActivityLog{
-        timestamp: Utc::now(),
-        user: "joe".to_owned(),
-        process: ProcessLogInfo{
-            name: "busybody".to_owned(),
-            id: 42,
-            cmdline: "busybody runall".to_owned()
-        },
-        info: ActionLogInfo::File(FileLogInfo{
-            path: ["/", "Users", "joe", "note.txt"].iter().collect(),
-            operation: FileAction::Create,
-        }),
+    let spec = spec::ActivitySpec::Process{
+        name: "ls".to_string(),
+        args: vec!["-l".to_string()],
     };
 
-    print_activity_info(&testact).unwrap();
+    println!("ActivitySpec: {:?}", spec);
+
+    let result = spec.execute(&ctx);
+    match result {
+        Ok(entry)   => print_activity_info(&entry).unwrap(),
+        Err(errstr) => println!("{}", errstr),
+    };
+
 }
