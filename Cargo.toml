@@ -1,0 +1,18 @@
+[package]
+name = "busybody"
+version = "0.1.0"
+authors = ["Levi Pearson <levipearson@gmail.com>"]
+
+[lib]
+name = "libbusybody"
+path = "src/lib.rs"
+
+[[bin]]
+name = "busybody"
+path = "src/main.rs"
+
+[dependencies]
+chrono = { version = "0.4", features = ["serde"] }
+serde = "1.0"
+serde_json = "1.0"
+serde_derive = "1.0"
