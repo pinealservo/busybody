@@ -2,10 +2,10 @@ extern crate serde;
 extern crate serde_json;
 extern crate chrono;
 
-extern crate libbusybody;
+extern crate busybody;
 
-use libbusybody::activity::*;
-use libbusybody::native;
+use busybody::activity::*;
+use busybody::native;
 use std::io::Result;
 
 fn main() -> Result<()> {
